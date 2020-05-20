@@ -1,0 +1,50 @@
+{% extends 'layouts/main.html' %} {% block title %}Fyyur | Artists{% endblock %} {% block content %}
+<ul class="items">
+    {% for artist in artists %}
+    <li>
+        <a href="/artists/{{ artist.id }}">
+            <i class="fas fa-users"></i>
+            <div class="item">
+                <h5>{{ artist.name }}</h5>
+            </div>
+        </a>
+        <button class="delete-button btn btn-danger btn-sm rounded-0" type="button" data-id="{{ artist.id }}"
+                data-toggle=" tooltip
+        " data-placement="top" title="" data-original-title="Delete">
+            <i class="fa fa-trash"></i>
+        </button>
+        <button class="edit-button btn btn-success btn-sm rounded-0" type="button" data-id="{{ artist.id }}"
+                data-toggle="
+                tooltip
+        " data-placement="top" title="" data-original-title="Edit">
+            <i class="fa fa-edit"></i>
+        </button>
+    </li>
+    {% endfor %}
+</ul>
+<script>
+    const deletes = document.querySelectorAll(".delete-button");
+    for (let i = 0; i < deletes.length; i++) {
+        const btn = deletes[i];
+        btn.onclick = function(e) {
+            console.log(e);
+            const artist_id = e.target.dataset["id"];
+            fetch("/artists/" + artist_id, {
+                method: "DELETE",
+            }).then((window.location = "/"));
+        };
+    }
+    const edit = document.querySelectorAll(".edit-button");
+    for (let i = 0; i < deletes.length; i++) {
+        const btn = edit[i];
+        btn.onclick = function(e) {
+            console.log(e);
+            const artist_id = e.target.dataset["id"];
+            window.location = "/artists/" + artist_id + "/edit";
+        };
+    }
+
+
+
+</script>
+{% endblock %}
